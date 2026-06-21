@@ -141,6 +141,7 @@ export const content = {
   heroAccent: 'Google reviews',
   heroTrail: '.',
   heroNote: 'Start free · paid plans unlock in-app · no fake reviews, ever',
+  heroMetaTag: 'Real reviews only',
 
   problemEyebrow: 'The reality',
   problemHeadline: 'You do great work. The reviews don’t follow.',
