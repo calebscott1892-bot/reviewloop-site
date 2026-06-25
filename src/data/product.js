@@ -116,7 +116,8 @@ export const product = {
       ],
     },
   ],
-  lifetime: { price: 450, href: `${SUITE_APP_URL}?ref=reviewloop-lifetime` },
+  // Direct Stripe one-time checkout (from C4 productData LIFETIME_LINKS).
+  lifetime: { price: 450, href: 'https://buy.stripe.com/00w28r6X60oQaYZeuY3ZK0i' },
   pricing: 'Starter $19/mo · Pro $45/mo. Start free — paid plans unlock inside the app.',
 
   // Primary CTA → suite app signup with attribution.
