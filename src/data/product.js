@@ -172,6 +172,8 @@ export const content = {
     'Every review lifts your local ranking and your conversion rate — and keeps working long after the job is done.',
 
   socialHeadline: 'Built for businesses that live on reviews',
+  // Flip to true + add a real `name` to each testimonial below to ship real social proof.
+  testimonialsAreReal: false,
   testimonials: [
     { quote: 'We went from asking maybe one customer in ten to every single job. The reviews just show up now.', role: 'Trades business owner' },
     { quote: 'The follow-up is the magic. Half our reviews come from the polite nudge we’d never have sent ourselves.', role: 'Home services' },
