@@ -9,6 +9,9 @@
 
 export const SUITE_APP_URL = 'https://c4-saas-suite.vercel.app';
 
+// The standalone ReviewLoop product app (where signups + billing happen).
+export const APP_URL = 'https://app.reviewloop.c4studios.com.au';
+
 // The all-in C4 Suite bundle (upsell on every product site).
 export const SUITE_BUNDLE = {
   price: 149,
@@ -118,11 +121,11 @@ export const product = {
   ],
   // Matches C4 productData lifetime.href — routes to the suite app, which handles
   // lifetime checkout + grants access on payment. (Raw Stripe LIFETIME_LINKS are archived.)
-  lifetime: { price: 450, href: `${SUITE_APP_URL}?ref=reviewloop-lifetime` },
+  lifetime: { price: 450, href: `${APP_URL}/billing?ref=reviewloop-lifetime` },
   pricing: 'Starter $19/mo · Pro $45/mo. Start free — paid plans unlock inside the app.',
 
   // Primary CTA → suite app signup with attribution.
-  ctaHref: `${SUITE_APP_URL}?ref=reviewloop`,
+  ctaHref: `${APP_URL}?ref=reviewloop`,
   ctaLabel: 'Start free',
 
   // Where this product lives in the family.
