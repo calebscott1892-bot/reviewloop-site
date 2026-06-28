@@ -121,32 +121,52 @@ function esc(str = '') {
     .replace(/"/g, '&quot;');
 }
 
-/** Returns the full <head> tag string injected by the prerender script. */
-export function renderHead() {
+/** Schemas for a programmatic-SEO landing page: FAQPage + BreadcrumbList. */
+export function landingSchemas(meta) {
+  return [faqSchema(meta.faqs), breadcrumbSchema(meta.breadcrumb), organizationSchema()];
+}
+
+/**
+ * Returns the full <head> tag string injected by the prerender script.
+ *
+ * Call with no args for the homepage (uses src/data/product.js `seo`), or pass a
+ * per-page `meta` override ({ title, description, url, ogImage, themeColor, schemas })
+ * for a prerendered landing page so each file gets a unique title/description/canonical.
+ */
+export function renderHead(meta) {
+  const m = {
+    title: seo.title,
+    description: seo.description,
+    url: seo.url,
+    ogImage: seo.ogImage,
+    themeColor: seo.themeColor,
+    schemas: allSchemas(),
+    ...(meta || {}),
+  };
   const tags = [
-    `<title>${esc(seo.title)}</title>`,
-    `<meta name="description" content="${esc(seo.description)}" />`,
-    `<meta name="theme-color" content="${seo.themeColor}" />`,
-    `<link rel="canonical" href="${seo.url}" />`,
+    `<title>${esc(m.title)}</title>`,
+    `<meta name="description" content="${esc(m.description)}" />`,
+    `<meta name="theme-color" content="${m.themeColor}" />`,
+    `<link rel="canonical" href="${m.url}" />`,
     // Open Graph
     `<meta property="og:type" content="website" />`,
     `<meta property="og:site_name" content="${esc(product.name)}" />`,
-    `<meta property="og:title" content="${esc(seo.title)}" />`,
-    `<meta property="og:description" content="${esc(seo.description)}" />`,
-    `<meta property="og:url" content="${seo.url}" />`,
-    `<meta property="og:image" content="${seo.ogImage}" />`,
+    `<meta property="og:title" content="${esc(m.title)}" />`,
+    `<meta property="og:description" content="${esc(m.description)}" />`,
+    `<meta property="og:url" content="${m.url}" />`,
+    `<meta property="og:image" content="${m.ogImage}" />`,
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,
-    `<meta property="og:image:alt" content="${esc(seo.title)}" />`,
+    `<meta property="og:image:alt" content="${esc(m.title)}" />`,
     `<meta property="og:locale" content="en_AU" />`,
     // Twitter
     `<meta name="twitter:card" content="summary_large_image" />`,
-    `<meta name="twitter:title" content="${esc(seo.title)}" />`,
-    `<meta name="twitter:description" content="${esc(seo.description)}" />`,
-    `<meta name="twitter:image" content="${seo.ogImage}" />`,
-    `<meta name="twitter:image:alt" content="${esc(seo.title)}" />`,
+    `<meta name="twitter:title" content="${esc(m.title)}" />`,
+    `<meta name="twitter:description" content="${esc(m.description)}" />`,
+    `<meta name="twitter:image" content="${m.ogImage}" />`,
+    `<meta name="twitter:image:alt" content="${esc(m.title)}" />`,
     // JSON-LD
-    `<script type="application/ld+json">${JSON.stringify(allSchemas())}</script>`,
+    `<script type="application/ld+json">${JSON.stringify(m.schemas)}</script>`,
   ];
   return tags.join('\n    ');
 }

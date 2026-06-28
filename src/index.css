@@ -1,3 +1,11 @@
+/* Self-hosted Inter (latin subset, weights used across the site) — replaces the
+   render-blocking fonts.googleapis.com <link>. @import must precede other rules. */
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-700.css';
+@import '@fontsource/inter/latin-800.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

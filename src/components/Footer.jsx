@@ -1,6 +1,14 @@
 import React from 'react';
 import { product, content } from '../data/product.js';
+import { landingPages } from '../data/landingPages.js';
 import { Container, Motif, ArrowUpRight } from './primitives.jsx';
+
+// Programmatic-SEO guide pages (prerendered standalone routes) — full page loads.
+const GUIDES = landingPages.map((p) => ({
+  name: p.title,
+  href: `/${p.slug}`,
+  internal: true,
+}));
 
 const FAMILY = [
   { name: 'ReviewLoop', href: 'https://reviewloop.c4studios.com.au' },
@@ -17,9 +25,9 @@ const COMPANY = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[color:var(--ink-bg)]">
+    <footer id="footer-guides" className="bg-[color:var(--ink-bg)]">
       <Container className="py-16">
-        <div className="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr]">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
           <div>
             <span className="inline-flex items-center gap-2.5">
               <span className="flex h-7 w-7 items-center justify-center overflow-hidden rounded-[3px] bg-white/5">
@@ -42,6 +50,7 @@ export default function Footer() {
 
           <FooterCol title="C4 products" links={FAMILY} />
           <FooterCol title="Company" links={COMPANY} />
+          <FooterCol title="Guides" links={GUIDES} />
         </div>
 
         <div className="mono mt-14 flex flex-col items-start justify-between gap-3 border-t border-[color:var(--ink-border)] pt-8 text-[10px] uppercase tracking-[0.16em] text-[color:var(--ink-faint)] sm:flex-row sm:items-center">
@@ -68,22 +77,26 @@ function FooterCol({ title, links }) {
     <nav aria-label={title}>
       <h3 className="mono text-[10px] font-medium uppercase tracking-[0.2em] text-[color:var(--ink-faint)]">{title}</h3>
       <ul className="mt-4 space-y-2.5">
-        {links.map((l) => (
-          <li key={l.name}>
-            <a
-              href={l.href}
-              target={l.href.startsWith('mailto') ? undefined : '_blank'}
-              rel="noopener noreferrer"
-              aria-current={l.current ? 'page' : undefined}
-              className={`group inline-flex items-center gap-1.5 text-[13.5px] transition-colors ${
-                l.current ? 'font-semibold text-[color:var(--ink-text)]' : 'text-[color:var(--ink-muted)] hover:text-[color:var(--ink-text)]'
-              }`}
-            >
-              {l.name}
-              {!l.href.startsWith('mailto') && <ArrowUpRight size={11} className="opacity-50" />}
-            </a>
-          </li>
-        ))}
+        {links.map((l) => {
+          const isMailto = l.href.startsWith('mailto');
+          const newTab = !isMailto && !l.internal;
+          return (
+            <li key={l.name}>
+              <a
+                href={l.href}
+                target={newTab ? '_blank' : undefined}
+                rel={newTab ? 'noopener noreferrer' : undefined}
+                aria-current={l.current ? 'page' : undefined}
+                className={`group inline-flex items-start gap-1.5 text-[13.5px] leading-[1.4] transition-colors ${
+                  l.current ? 'font-semibold text-[color:var(--ink-text)]' : 'text-[color:var(--ink-muted)] hover:text-[color:var(--ink-text)]'
+                }`}
+              >
+                <span>{l.name}</span>
+                {newTab && <ArrowUpRight size={11} className="mt-1 shrink-0 opacity-50" />}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );
