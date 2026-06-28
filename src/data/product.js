@@ -197,5 +197,5 @@ export const seo = {
     'ReviewLoop sends timed, templated review requests and polite follow-ups so happy customers leave Google reviews — automatically. AI-drafted replies on Pro. A C4 Studios product.',
   url: product.siteUrl,
   ogImage: `${product.siteUrl}/og.png`,
-  themeColor: '#0f1115',
+  themeColor: '#f7f5f2',
 };
