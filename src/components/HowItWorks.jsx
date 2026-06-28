@@ -21,7 +21,6 @@ import { Container, Section, Eyebrow, Reveal, EASE, Star } from './primitives.js
  */
 
 const STEP_MS = 4600;
-const SUCCESS = '#1f9d57';
 
 // Per-step headings for the panel header + stepper. Kept beside the visuals;
 // body copy stays sourced from product.howItWorks.
@@ -88,13 +87,12 @@ function AddVisual({ active, reduce }) {
         </div>
         <motion.span
           aria-hidden="true"
-          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
-          style={{ color: SUCCESS, background: 'color-mix(in srgb, ' + SUCCESS + ' 12%, transparent)' }}
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent"
           initial={reduce ? false : { opacity: 0, scale: 0.6 }}
           animate={animate ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
           transition={{ duration: 0.35, delay: animate ? 0.7 : 0, ease: EASE }}
         >
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={SUCCESS} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
             <path d="M20 6L9 17l-5-5" />
           </svg>
         </motion.span>
