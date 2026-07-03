@@ -7,6 +7,7 @@ import {
   Eyebrow,
   Button,
   Card,
+  Reveal,
   Wordmark,
   ArrowRight,
   Plus,
@@ -79,17 +80,22 @@ export default function LandingPage({ page }) {
               </ol>
             </nav>
 
-            <Eyebrow>{page.eyebrow}</Eyebrow>
-            <h1 className="mt-6 max-w-[20ch] text-[clamp(2.1rem,5vw,3.4rem)] font-semibold leading-[1.04] tracking-[-0.035em] text-ink">
-              {page.h1}
-            </h1>
-            <p className="mt-6 max-w-[58ch] text-[16.5px] leading-[1.7] text-ink-muted">{page.lead}</p>
-            <div className="mt-9">
-              <Button href={product.ctaHref} variant="primary">
-                {product.ctaLabel}
-                <ArrowRight />
-              </Button>
-            </div>
+            <Reveal>
+              <Eyebrow>{page.eyebrow}</Eyebrow>
+              <h1 className="mt-6 max-w-[20ch] text-[clamp(2.1rem,5vw,3.4rem)] font-semibold leading-[1.04] tracking-[-0.035em] text-ink">
+                {page.h1}
+              </h1>
+              <p className="mt-6 max-w-[58ch] text-[16.5px] leading-[1.7] text-ink-muted">{page.lead}</p>
+              <div className="mt-9">
+                <Button href={product.ctaHref} variant="primary">
+                  {product.ctaLabel}
+                  <ArrowRight />
+                </Button>
+              </div>
+              <p className="mono mt-6 text-[10.5px] uppercase tracking-[0.16em] text-ink-faint">
+                {product.ctaReassurance}
+              </p>
+            </Reveal>
           </Container>
         </Section>
 
@@ -98,7 +104,7 @@ export default function LandingPage({ page }) {
           <Container>
             <div className="mx-auto max-w-[68ch] space-y-14">
               {page.sections.map((s, i) => (
-                <article key={i}>
+                <Reveal key={i} as="article">
                   <h2 className="text-[clamp(1.5rem,3vw,2.1rem)] font-semibold leading-[1.12] tracking-[-0.03em] text-ink">
                     {s.h}
                   </h2>
@@ -116,7 +122,7 @@ export default function LandingPage({ page }) {
                       ))}
                     </ul>
                   )}
-                </article>
+                </Reveal>
               ))}
             </div>
           </Container>
@@ -126,7 +132,7 @@ export default function LandingPage({ page }) {
         <Section className="border-b border-line bg-bg-alt">
           <Container>
             <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
-              <div>
+              <Reveal>
                 <Eyebrow>FAQ</Eyebrow>
                 <h2 className="mt-6 text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold leading-[1.08] tracking-[-0.035em] text-ink">
                   Common questions
@@ -138,8 +144,9 @@ export default function LandingPage({ page }) {
                   </a>
                   .
                 </p>
-              </div>
+              </Reveal>
 
+              <Reveal delay={0.06}>
               <Card className="overflow-hidden">
                 {page.faqs.map((f, i) => (
                   <details key={f.q} className="group" style={i === 0 ? undefined : { borderTop: '1px solid var(--border-light)' }}>
@@ -151,6 +158,7 @@ export default function LandingPage({ page }) {
                   </details>
                 ))}
               </Card>
+              </Reveal>
             </div>
           </Container>
         </Section>
@@ -158,7 +166,7 @@ export default function LandingPage({ page }) {
         {/* CTA */}
         <Section>
           <Container>
-            <div className="relative overflow-hidden rounded-[18px] bg-[color:var(--ink-bg)] px-8 py-20 text-center md:px-16 md:py-24" style={{ boxShadow: 'var(--shadow-panel)' }}>
+            <Reveal className="relative overflow-hidden rounded-[18px] bg-[color:var(--ink-bg)] px-8 py-20 text-center md:px-16 md:py-24" style={{ boxShadow: 'var(--shadow-panel)' }}>
               <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-accent-line" />
               <Motif size={16} className="justify-center" />
               <h2 className="mx-auto mt-6 max-w-[22ch] text-[clamp(1.8rem,4vw,3rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-[color:var(--ink-text)]">
@@ -174,9 +182,9 @@ export default function LandingPage({ page }) {
                 </Button>
               </div>
               <p className="mono mt-6 text-[10px] uppercase tracking-[0.18em] text-[color:var(--ink-faint)]">
-                No card to start · paid plans unlock in-app
+                Free to start · no card required · cancel anytime
               </p>
-            </div>
+            </Reveal>
           </Container>
         </Section>
       </main>

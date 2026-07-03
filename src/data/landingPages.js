@@ -10,7 +10,7 @@
  * Copy is original, specific and genuinely useful — no filler. Prices/links are
  * NEVER hardcoded here; the page pulls them from product.js at render time.
  */
-import { product } from './product.js';
+import { product, seo } from './product.js';
 
 const SITE = product.siteUrl;
 
@@ -234,7 +234,9 @@ export function landingMeta(page) {
     description: page.metaDescription,
     url,
     ogImage: `${SITE}/og.png`,
-    themeColor: product.themeColor || '#9e600a',
+    // Match the homepage theme-color (warm-light surface) so the browser chrome
+    // is consistent across the site. `seo.themeColor` is the single source.
+    themeColor: seo.themeColor,
     breadcrumb: [
       { name: 'ReviewLoop', url: SITE },
       { name: 'Guides', url: `${SITE}/` },

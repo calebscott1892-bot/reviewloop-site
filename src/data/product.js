@@ -124,9 +124,11 @@ export const product = {
   lifetime: { price: 450, href: `${APP_URL}/billing?ref=reviewloop-lifetime` },
   pricing: 'Starter $19/mo · Pro $45/mo. Start free — paid plans unlock inside the app.',
 
-  // Primary CTA → suite app signup with attribution.
-  ctaHref: `${APP_URL}?ref=reviewloop`,
+  // Primary CTA → the live ReviewLoop app signup (with attribution).
+  ctaHref: `${APP_URL}/signup?ref=reviewloop`,
   ctaLabel: 'Start free',
+  // Short, truthful reassurance shown beside the primary CTA.
+  ctaReassurance: 'Free to start · no card required · cancel anytime',
 
   // Where this product lives in the family.
   c4Url: 'https://c4studios.com.au',
@@ -175,13 +177,32 @@ export const content = {
   outcomesSub:
     'Every review lifts your local ranking and your conversion rate — and keeps working long after the job is done.',
 
+  // ── Value / outcomes section (replaces placeholder testimonials until real,
+  //    approved customer quotes are ready). Genuine product-value props — not
+  //    attributed quotes — so nothing on the page is fabricated social proof. ──
+  socialEyebrow: 'Why it works',
   socialHeadline: 'Built for businesses that live on reviews',
-  // Flip to true + add a real `name` to each testimonial below to ship real social proof.
-  testimonialsAreReal: false,
-  testimonials: [
-    { quote: 'We went from asking maybe one customer in ten to every single job. The reviews just show up now.', role: 'Trades business owner' },
-    { quote: 'The follow-up is the magic. Half our reviews come from the polite nudge we’d never have sent ourselves.', role: 'Home services' },
-    { quote: 'Replies used to sit for weeks. The AI drafts them and I just hit post.', role: 'Salon owner' },
+  socialSub:
+    'Every part of ReviewLoop points at one outcome — more genuine reviews, with less of your time. Here is what that looks like day to day.',
+  valueProps: [
+    {
+      // Count-up target + optional prefix/suffix render the animated stat.
+      value: 100,
+      suffix: '%',
+      label: 'of finished jobs get the ask',
+      body: 'Add the customer once and every completed job triggers a timed request — no more “I meant to ask”.',
+    },
+    {
+      value: 1,
+      label: 'polite follow-up, done for you',
+      body: 'A single friendly nudge recovers the customers who simply forgot — the reviews you’d otherwise never see.',
+    },
+    {
+      value: 30,
+      suffix: 's',
+      label: 'from happy customer to review',
+      body: 'One tap-to-review link drops them straight on your Google profile. No searching, no friction.',
+    },
   ],
 
   finalHeadline: 'Your next happy customer is a review waiting to happen.',

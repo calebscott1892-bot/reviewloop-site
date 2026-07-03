@@ -38,7 +38,7 @@ export default function FinalCTA() {
               </a>
             </div>
             <p className="mono mt-6 text-[10px] uppercase tracking-[0.18em] text-[color:var(--ink-faint)]">
-              No card to start · paid plans unlock in-app
+              {product.ctaReassurance}
             </p>
           </div>
         </Reveal>

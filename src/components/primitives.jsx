@@ -1,7 +1,56 @@
 import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, useInView } from 'framer-motion';
 
 export const EASE = [0.22, 1, 0.36, 1];
+
+/**
+ * Count-up number that animates from 0 → `value` once it scrolls into view.
+ * SSR-safe (renders the final value server-side) and fully reduced-motion aware
+ * (no animation — shows the final value immediately). Reuses framer-motion's
+ * useInView, already used elsewhere in this repo, so no new dependency.
+ */
+export function CountUp({ value, duration = 1.4, prefix = '', suffix = '', className = '' }) {
+  const reduce = useReducedMotion();
+  const ref = React.useRef(null);
+  const inView = useInView(ref, { once: true, margin: '0px 0px -12% 0px' });
+  const decimals = Number.isInteger(value) ? 0 : String(value).split('.')[1]?.length || 0;
+  // SSR + first client paint render the FINAL value, so no-JS/no-motion users
+  // (and crawlers) always see the real number. The animation only kicks in on
+  // the client, after mount, once the element scrolls into view.
+  const [display, setDisplay] = React.useState(value);
+  const [armed, setArmed] = React.useState(false);
+
+  React.useEffect(() => {
+    if (reduce) return; // reduced motion: leave the final value in place
+    setArmed(true); // client mounted: allow the count-up from 0
+    setDisplay(0);
+  }, [reduce]);
+
+  React.useEffect(() => {
+    if (reduce || !armed || !inView) return undefined;
+    let raf;
+    const start = performance.now();
+    const tick = (now) => {
+      const t = Math.min((now - start) / (duration * 1000), 1);
+      // easeOutCubic — matches the site's decelerating motion feel.
+      const eased = 1 - Math.pow(1 - t, 3);
+      setDisplay(value * eased);
+      if (t < 1) raf = requestAnimationFrame(tick);
+      else setDisplay(value);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, armed, reduce, value, duration]);
+
+  const shown = display.toFixed(decimals);
+  return (
+    <span ref={ref} className={`tabular-nums ${className}`}>
+      {prefix}
+      {shown}
+      {suffix}
+    </span>
+  );
+}
 
 export function Container({ className = '', children }) {
   return <div className={`mx-auto w-full max-w-container px-6 md:px-12 ${className}`}>{children}</div>;
